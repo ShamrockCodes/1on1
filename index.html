@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>1 on 1</title>
+  <link rel="stylesheet" href="style.css" >
+
+  <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+  
+  <script src="peer.js"></script>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="status" id="status">Ready to share your screen</div>
+    
+    <!-- Remote Video Section -->
+    <div class="video-section">
+      <div class="video-label">
+        <span>Remote Video</span>
+        <span class="connection-status disconnected" id="remote-status">Disconnected</span>
+        <div class="video-controls">
+          <button id="remote-fullscreen-btn" disabled class="control-btn">Fullscreen</button>
+          <button id="remote-pip-btn" disabled class="control-btn">PiP</button>
+        </div>
+      </div>
+      <div class="video-container" id="remote-video-container">
+        <div class="video-placeholder" id="remote-video-placeholder">
+          <p>No remote video</p>
+          <p>Waiting for connection...</p>
+        </div>
+        <video id="remote-video" autoplay></video>
+      </div>
+    </div>
+    
+    <!-- Local Video Section -->
+    <div class="video-section">
+      <div class="video-label">
+        <span>Your Video</span>
+        <div class="video-controls">
+          <button id="local-fullscreen-btn" disabled class="control-btn">Fullscreen</button>
+          <button id="local-pip-btn" disabled class="control-btn">PiP</button>
+        </div>
+      </div>
+      <div class="video-container" id="local-video-container">
+        <div class="video-placeholder" id="local-video-placeholder">
+          <p>No active video</p>
+          <p>Click "Start Sharing" or "Start Camera" to begin</p>
+        </div>
+        <video id="local-video" autoplay muted></video>
+      </div>
+    </div>
+    
+    <div class="controls">
+      <button id="share-btn" class="primary">Start Screen Sharing</button>
+      <button id="stop-btn" disabled class="secondary">Stop Sharing</button>
+      <button id="start-cam-btn">Start Camera</button>
+      <button id="stop-cam-btn" disabled class="secondary">Stop Camera</button>
+    </div>
+    
+    <!-- Peer Connection Controls -->
+    <div class="peer-controls">
+      <div>
+        <span>Your ID: </span>
+        <span class="peer-id" id="my-peer-id">Not connected</span>
+        <button id="copy-id" class="secondary">Copy ID</button>
+      </div>
+      <div class="connection-form">
+        <input type="text" id="peer-id-input" placeholder="Enter peer ID to connect
+        <input type="text" id="peer-id-input" placeholder="Enter peer ID to connect">
+        <button id="connect-btn" class="primary">Connect</button>
+        <button id="disconnect-btn" disabled class="secondary">Disconnect</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for screen selection -->
+  <div id="screen-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Select Screen to Share</h2>
+        <button class="close-button" id="close-modal">&times;</button>
+      </div>
+      
+      <div id="modal-body">
+        <div class="loading" id="loading-message">Loading available screens...</div>
+        <div id="error-message" class="error" style="display: none;"></div>
+        <div id="source-grid" class="source-grid"></div>
+      </div>
+      
+      <div class="modal-footer">
+        <div class="audio-option">
+          <input type="checkbox" id="share-audio" />
+          <label for="share-audio">Share system audio</label>
+          <span style="margin-left: 10px; font-size: 12px; color: var(--dark-warning);">(May not work on all systems)</span>
+        </div>
+        
+        <div class="modal-actions">
+          <button id="cancel-btn" class="secondary">Cancel</button>
+          <button id="start-share-btn" disabled class="primary">Start Sharing</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Load the renderer script last -->
+  <script src="renderer.js"></script>
+</body>
+</html>
